@@ -35,7 +35,16 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* width: 100%; */
+    width: 50%;
+}
+
+@media (max-width: 600px) {
+    .form-and-table {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }    
 }
 
 /*Form*/
@@ -44,8 +53,7 @@ form {
     flex-direction: column;
     align-items: center;
     background: white;
-    padding: 13px;
-    width: 80%;
+    width: 100%;
 }
 
 input[type="text"],
@@ -54,7 +62,7 @@ input[type="email"],
 input[type="submit"] {
     width: calc(100% - 20px);
     padding: 10px;
-    margin-top: 8px;
+    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -78,10 +86,15 @@ form label {
 }
 
 /*Table*/
+.scrollable {
+    overflow-x: auto;
+    width: 100%;
+}
+
 table {
-    width: 50%;
-    margin: 20px auto;
+    width: 100%;
     border-collapse: collapse;
+    margin: 20px auto;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
