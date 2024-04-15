@@ -31,6 +31,52 @@ h1 {
     height: 100%;
 }
 
+.form-and-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 100%; */
+}
+
+/*Form*/
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 13px;
+    width: 80%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+label {
+    align-items: start;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/*Table*/
 table {
     width: 50%;
     margin: 20px auto;
@@ -54,9 +100,11 @@ tr:hover {
 }
 
 caption {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     font-weight: bolder;
     padding: 10px;
-    background-color: #ccc;
+    background-color: blanchedalmond;
     border-top: 1px solid rgba(0, 0, 0, .2); 
     border-left: 1px solid rgba(0, 0, 0, .2); 
     border-right: 1px solid rgba(0, 0, 0, .2);
