@@ -70,10 +70,11 @@ input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-label {
-    align-items: start;
+form label {
     font-size: 16px;
     margin-top: 10px;
+    padding-left: 10px;
+    align-self: flex-start;
 }
 
 /*Table*/
@@ -104,7 +105,7 @@ caption {
     border-top-right-radius: 5px;
     font-weight: bolder;
     padding: 10px;
-    background-color: blanchedalmond;
+    background-color: yellowgreen;
     border-top: 1px solid rgba(0, 0, 0, .2); 
     border-left: 1px solid rgba(0, 0, 0, .2); 
     border-right: 1px solid rgba(0, 0, 0, .2);
