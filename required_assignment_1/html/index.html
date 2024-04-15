@@ -17,8 +17,15 @@
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
+          <label for="DOB">Date of Birth</label>
+          <input type="date" id="date" name="date" required>
+
+          <label for="DOB">Sex</label>
+          <select>
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+            <option value="2">Intersex</option>
+          </select>
 
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required>
@@ -28,32 +35,31 @@
 
         <h2 style="margin-top: 20px;">Table</h2>
         <div class="scrollable">
-          <table>
-            <caption>Employees</caption>
+          <custom-form rows="5" caption="People"></custom-form>
+          <!-- <table>
+            <caption>People</caption>
             <tr>
-              <th>Column 1</th>
-              <th>Column 2</th>
-              <th>Column 3</th>
-              <th>Column 4</th>
-              <th>Column 5</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Sex</th>
+              <th>Email</th>
             </tr>
             <tr>
-              <td>Row 1, Cell 1</td>
-              <td>Row 1, Cell 2</td>
-              <td>Row 1, Cell 3</td>
-              <td>Row 1, Cell 4</td>
-              <td>Row 1, Cell 5</td>
+              <td>Christiano Ronaldo</td>
+              <td>39</td>
+              <td>Male</td>
+              <td>christiano@ronaldo.com</td>
             </tr>
             <tr>
-              <td>Row 2, Cell 1</td>
-              <td>Row 2, Cell 2</td>
-              <td>Row 2, Cell 3</td>
-              <td>Row 2, Cell 4</td>
-              <td>Row 2, Cell 5</td>
+              <td>Lionel Messi</td>
+              <td>36</td>
+              <td>Male</td>
+              <td>lionel@messi.com</td>
             </tr>
-          </table>
+          </table> -->
         </div>
       </div>
     </div>
+    <script src="../js/index.js"></script>
   </body>
 </html>
