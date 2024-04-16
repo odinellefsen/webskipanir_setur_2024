@@ -13,7 +13,7 @@
     <div class="main-content">
       <div class="form-and-table">
         <h2>Form</h2>
-        <form action="#" method="post">
+        <form action="javascript:void(0);" method="post" id="personForm">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
 
@@ -21,9 +21,9 @@
           <input type="date" id="date" name="date" required>
 
           <label for="DOB">Sex</label>
-          <select>
-            <option value="0">Female</option>
-            <option value="1">Male</option>
+          <select id="sex">
+            <option value="0">Male</option>
+            <option value="1">Female</option>
             <option value="2">Intersex</option>
           </select>
 
@@ -35,28 +35,21 @@
 
         <h2 style="margin-top: 20px;">Table</h2>
         <div class="scrollable">
-          <custom-form rows="5" caption="People"></custom-form>
-          <!-- <table>
-            <caption>People</caption>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Sex</th>
-              <th>Email</th>
-            </tr>
-            <tr>
-              <td>Christiano Ronaldo</td>
-              <td>39</td>
-              <td>Male</td>
-              <td>christiano@ronaldo.com</td>
-            </tr>
-            <tr>
-              <td>Lionel Messi</td>
-              <td>36</td>
-              <td>Male</td>
-              <td>lionel@messi.com</td>
-            </tr>
-          </table> -->
+          <noscript>
+            <table>
+              <caption>Enable javascript</caption>
+              <tr>
+                <th>Enable javascript</th>
+                <th>Enable javascript</th>
+                <th>Enable javascript</th>
+              </tr>
+            </table>
+          </noscript>
+          <custom-form 
+            rows="5" 
+            caption="People"
+            headers='["Name", "Date of Birth", "Sex", "Email"]'
+          ></custom-form>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ class CustomForm extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.render();
+        this.initializeTable();
     }
 
     static get observedAttributes() {
@@ -10,15 +10,17 @@ class CustomForm extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        this.render();
+        if (name === 'data') {
+            this.updateTableData();
+        }
     }
 
     connectedCallback() {
-        this.render();
+        this.updateTableData();
     }
 
-    render() {
-        this.shadowRoot.innerHTML = '';  // Clear existing content
+    initializeTable() {
+        this.shadowRoot.innerHTML = '';
 
         const style = document.createElement('style');
         style.textContent = `
@@ -51,6 +53,8 @@ class CustomForm extends HTMLElement {
         this.shadowRoot.appendChild(style);
 
         const table = document.createElement('table');
+        this.table = table;
+
         const captionText = this.getAttribute('caption');
         if (captionText) {
             const caption = document.createElement('caption');
@@ -59,8 +63,6 @@ class CustomForm extends HTMLElement {
         }
 
         const headers = JSON.parse(this.getAttribute('headers') || '[]');
-        const data = JSON.parse(this.getAttribute('data') || '[]');
-
         const thead = document.createElement('thead');
         const trHead = document.createElement('tr');
         headers.forEach(header => {
@@ -72,6 +74,16 @@ class CustomForm extends HTMLElement {
         table.appendChild(thead);
 
         const tbody = document.createElement('tbody');
+        this.tbody = tbody;
+        table.appendChild(tbody);
+
+        this.shadowRoot.appendChild(table);
+    }
+
+    updateTableData() {
+        const data = JSON.parse(this.getAttribute('data') || '[]');
+        this.tbody.innerHTML = '';
+
         data.forEach(row => {
             const tr = document.createElement('tr');
             row.forEach(cell => {
@@ -79,12 +91,33 @@ class CustomForm extends HTMLElement {
                 td.textContent = cell;
                 tr.appendChild(td);
             });
-            tbody.appendChild(tr);
+            this.tbody.appendChild(tr);
         });
-        table.appendChild(tbody);
-
-        this.shadowRoot.appendChild(table);
     }
 }
 
 window.customElements.define('custom-form', CustomForm);
+
+document.addEventListener('DOMContentLoaded', () => {
+    let formData = [];
+
+    const form = document.getElementById("personForm");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const userData = [
+            document.getElementById('name').value,
+            document.getElementById('date').value,
+            document.getElementById('sex').options[document.getElementById('sex').selectedIndex].text,
+            document.getElementById('email').value
+        ];
+
+        formData.push(userData);
+
+        const customForm = document.querySelector('custom-form');
+        customForm.setAttribute('data', JSON.stringify(formData));
+
+        form.reset();
+    });
+});
+
