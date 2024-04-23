@@ -84,13 +84,11 @@ class CustomForm extends HTMLElement {
         const data = JSON.parse(this.getAttribute('data') || '[]');
         this.tbody.innerHTML = '';
 
+        const tr = document.createElement('tr');
         data.forEach(row => {
-            const tr = document.createElement('tr');
-            row.forEach(cell => {
-                const td = document.createElement('td');
-                td.textContent = cell;
-                tr.appendChild(td);
-            });
+            const td = document.createElement('td');
+            td.textContent = row;
+            tr.appendChild(td);
             this.tbody.appendChild(tr);
         });
     }
@@ -98,9 +96,19 @@ class CustomForm extends HTMLElement {
 
 window.customElements.define('custom-form', CustomForm);
 
-document.addEventListener('DOMContentLoaded', () => {
-    let formData = [];
+function storeData(data) {
+    const currentlyStored = fetchData();
+    currentlyStored.push(data);
+    localStorage.setItem('people-table-data', JSON.stringify(currentlyStored));
+}
 
+function fetchData() {
+    const storedArray = localStorage.getItem('people-table-data');
+    console.log('json parse: ', JSON.parse(storedArray));
+    return JSON.parse(storedArray) || [];
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById("personForm");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -112,12 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('email').value
         ];
 
-        formData.push(userData);
+        storeData(userData);
 
-        const customForm = document.querySelector('custom-form');
-        customForm.setAttribute('data', JSON.stringify(formData));
+        const allTableData = fetchData();
+        
+        const customForm = document.querySelector('#user-table');
+        customForm.setAttribute('data', JSON.stringify(allTableData));
 
-        form.reset();
+        // form.reset();
     });
 });
-

@@ -8,7 +8,7 @@
   </head>
   <body>
     <header>
-      <h1>Dunno Yet</h1>
+      <h1>China simulator</h1>
     </header>
     <div class="main-content">
       <div class="form-and-table">
@@ -17,14 +17,13 @@
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
 
-          <label for="DOB">Date of Birth</label>
+          <label for="date">Date of Birth</label>
           <input type="date" id="date" name="date" required>
 
-          <label for="DOB">Sex</label>
+          <label for="sex">Sex</label>
           <select id="sex">
             <option value="0">Male</option>
             <option value="1">Female</option>
-            <option value="2">Intersex</option>
           </select>
 
           <label for="email">Email</label>
@@ -45,10 +44,11 @@
               </tr>
             </table>
           </noscript>
-          <custom-form 
-            rows="5" 
+          <custom-form
+            rows="5"
             caption="People"
             headers='["Name", "Date of Birth", "Sex", "Email"]'
+            id="user-table"
           ></custom-form>
         </div>
       </div>
