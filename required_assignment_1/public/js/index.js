@@ -81,14 +81,16 @@ class CustomForm extends HTMLElement {
     }
 
     updateTableData() {
-        const data = JSON.parse(this.getAttribute('data') || '[]');
+        const data = JSON.parse(this.getAttribute('data') || '[[]]');
         this.tbody.innerHTML = '';
 
-        const tr = document.createElement('tr');
         data.forEach(row => {
-            const td = document.createElement('td');
-            td.textContent = row;
-            tr.appendChild(td);
+            const tr = document.createElement('tr');
+            row.forEach(row_item => {
+                const td = document.createElement('td');
+                td.textContent = row_item;
+                tr.appendChild(td);
+            })
             this.tbody.appendChild(tr);
         });
     }
@@ -104,11 +106,14 @@ function storeData(data) {
 
 function fetchData() {
     const storedArray = localStorage.getItem('people-table-data');
-    console.log('json parse: ', JSON.parse(storedArray));
     return JSON.parse(storedArray) || [];
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const allTableData = fetchData();
+    const customForm = document.querySelector('#user-table');
+    customForm.setAttribute('data', JSON.stringify(allTableData));
+
     const form = document.getElementById("personForm");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -123,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         storeData(userData);
 
         const allTableData = fetchData();
-        
+
         const customForm = document.querySelector('#user-table');
         customForm.setAttribute('data', JSON.stringify(allTableData));
 
