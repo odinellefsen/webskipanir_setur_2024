@@ -89,36 +89,35 @@ export class CustomTable extends HTMLElement {
         // basically the order of values in data is rearranged to be exact same order as headers
         // and all values in data that are not in headers will be removed
         function reorderedData(data, headers) {
-            let new_array = []
-            let current_arr = [];
-            headers.map(header => {
-                let is_value_found = false;
-                for (let arr of data) {
-                    for(let object = 0; object < arr.length; object++) {
-                        if (arr[object].id == header) {
-                            is_value_found = true;
-                            current_arr = arr[object].value;
-                            break;
-                        }
+            let new_data_array = [];
+            data.forEach(arr => {
+                let reordered = [];
+                headers.forEach(header => {
+                    let found_object = arr.find(object => object.id.toLowerCase() === header.toLowerCase());
+                    if (found_object) {
+                        reordered.push(found_object);
                     }
-                    if (is_value_found) break;
-                }
-                new_array.push(is_value_found ? current_arr : "");
-            })
-            return new_array;
+                });
+                new_data_array.push(reordered);
+            });
+        
+            return new_data_array;
         }
 
-        const ordered_data = reorderedData(data, headers);
-        console.log('ordered data: ', ordered_data);
+        if (data.length > 0 && data[0].length != 0) {
+            const ordered_data = reorderedData(data, headers);
 
-        const tr = document.createElement('tr');
-        ordered_data.forEach(value => {
-            const td = document.createElement('td');
-            td.textContent = value;
-            tr.appendChild(td);
+            ordered_data.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(object => {
+                    const td = document.createElement('td');
+                    td.textContent = object.value;
+                    tr.appendChild(td);
+                })
+                this.tbody.appendChild(tr);
+            })
+        }
 
-        })
-        this.tbody.appendChild(tr);
     }
 
     fetchData() {
