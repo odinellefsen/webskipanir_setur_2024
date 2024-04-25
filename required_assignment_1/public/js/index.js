@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 id: 'Name',
                 value: document.getElementById('name').value,
-                url: `profile.html?user=${document.getElementById('name').value.toLowerCase()}`
+                url: `profile.html?user=${document.getElementById('name').value}`
             },
             {
                 id: 'Date of Birth',

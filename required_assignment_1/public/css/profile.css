@@ -1,0 +1,37 @@
+.profile-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-image-container {
+    margin-top: 20px;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid #cccccc;
+    box-shadow: 4px 8px #888888;
+}
+
+.fileUploader {
+    margin-top: 1em;
+}
+
+input[type="file"] {
+    padding: 10px 20px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 3px solid #cccccc;
+    background-color: #f0f0f0;   
+}
+
+
+#profileImage {
+    width: 100%;
+    height: auto;
+}
