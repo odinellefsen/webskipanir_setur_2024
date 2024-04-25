@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const user_data = [
             {
                 id: 'Name',
-                value: document.getElementById('name').value
+                value: document.getElementById('name').value,
+                url: `profile.html?user=${document.getElementById('name').value.toLowerCase()}`
             },
             {
                 id: 'Date of Birth',

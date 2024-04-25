@@ -111,13 +111,19 @@ export class CustomTable extends HTMLElement {
                 const tr = document.createElement('tr');
                 row.forEach(object => {
                     const td = document.createElement('td');
-                    td.textContent = object.value;
+                    if (object.hasOwnProperty('url')) {
+                        const a_link = document.createElement('a');
+                        a_link.href = object.url;
+                        a_link.innerHTML = object.value;
+                        td.appendChild(a_link);
+                    } else {
+                        td.textContent = object.value;
+                    }
                     tr.appendChild(td);
                 })
                 this.tbody.appendChild(tr);
             })
         }
-
     }
 
     fetchData() {
