@@ -82,17 +82,43 @@ export class CustomTable extends HTMLElement {
 
     updateTableData() {
         const data = JSON.parse(this.getAttribute('data') || '[[]]');
+        const headers = JSON.parse(this.getAttribute('headers') || '[]');
         this.tbody.innerHTML = '';
 
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            row.forEach(row_item => {
-                const td = document.createElement('td');
-                td.textContent = row_item;
-                tr.appendChild(td);
+        // rendering based on order and values of the headers attribute values
+        // basically the order of values in data is rearranged to be exact same order as headers
+        // and all values in data that are not in headers will be removed
+        function reorderedData(data, headers) {
+            let new_array = []
+            let current_arr = [];
+            headers.map(header => {
+                let is_value_found = false;
+                for (let arr of data) {
+                    for(let object = 0; object < arr.length; object++) {
+                        if (arr[object].id == header) {
+                            is_value_found = true;
+                            current_arr = arr[object].value;
+                            break;
+                        }
+                    }
+                    if (is_value_found) break;
+                }
+                new_array.push(is_value_found ? current_arr : "");
             })
-            this.tbody.appendChild(tr);
-        });
+            return new_array;
+        }
+
+        const ordered_data = reorderedData(data, headers);
+        console.log('ordered data: ', ordered_data);
+
+        const tr = document.createElement('tr');
+        ordered_data.forEach(value => {
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.appendChild(td);
+
+        })
+        this.tbody.appendChild(tr);
     }
 
     fetchData() {
@@ -101,14 +127,18 @@ export class CustomTable extends HTMLElement {
     }    
 
     storeData(newData) {
-        const currentlyStoredData = this.fetchData();
-        currentlyStoredData.push(newData);
-        localStorage.setItem(this.id, JSON.stringify(currentlyStoredData));
+        const currently_stored_data = this.fetchData();
+        currently_stored_data.push(newData);
+        const new_data_string = JSON.stringify(currently_stored_data);
+        if (this.getAttribute('data') !== new_data_string) {
+            localStorage.setItem(this.id, new_data_string);
+            this.setAttribute('data', new_data_string);
+        }
     }    
 
     deleteRow(index) {
-        const currentlyStored = this.fetchData();
-        currentlyStored.splice(index, 1);
-        this.storeData(currentlyStored);
+        const data = this.fetchData();
+        data.splice(index, 1);
+        this.storeData(data);
     }
 }

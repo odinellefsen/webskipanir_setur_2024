@@ -12,11 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const user_data = [
-            document.getElementById('name').value,
-            document.getElementById('date').value,
-            document.getElementById('sex').options[document.getElementById('sex').selectedIndex].text,
-            document.getElementById('email').value
-        ];
+            {
+                id: 'Name',
+                value: document.getElementById('name').value
+            },
+            {
+                id: 'Date of Birth',
+                value: document.getElementById('date').value
+            },
+            {
+                id: 'Sex',
+                value: document.getElementById('sex').options[document.getElementById('sex').selectedIndex].text
+            },
+            {
+                id: 'Email',
+                value: document.getElementById('email').value
+            }
+        ];        
 
         custom_table.storeData(user_data);
 
