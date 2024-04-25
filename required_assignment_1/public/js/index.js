@@ -1,40 +1,24 @@
-import { CustomForm } from './custom-form.js';
+import { CustomTable } from './custom-table.js';
 
-window.customElements.define('custom-form', CustomForm);
-
-function storeData(data) {
-    const currentlyStored = fetchData();
-    currentlyStored.push(data);
-    localStorage.setItem('people-table-data', JSON.stringify(currentlyStored));
-}
-
-function fetchData() {
-    const storedArray = localStorage.getItem('people-table-data');
-    return JSON.parse(storedArray) || [];
-}
+window.customElements.define('custom-table', CustomTable);
 
 document.addEventListener('DOMContentLoaded', () => {
-    const allTableData = fetchData();
-    const customForm = document.querySelector('#user-table');
-    customForm.setAttribute('data', JSON.stringify(allTableData));
+    const custom_table = document.querySelector('#people-table-data');
+    const stored_data = custom_table.fetchData();
+    custom_table.setAttribute('data', JSON.stringify(stored_data));
 
     const form = document.getElementById("personForm");
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        const userData = [
+        const user_data = [
             document.getElementById('name').value,
             document.getElementById('date').value,
             document.getElementById('sex').options[document.getElementById('sex').selectedIndex].text,
             document.getElementById('email').value
         ];
 
-        storeData(userData);
-
-        const allTableData = fetchData();
-
-        const customForm = document.querySelector('#user-table');
-        customForm.setAttribute('data', JSON.stringify(allTableData));
+        custom_table.storeData(user_data);
 
         form.reset();
     });

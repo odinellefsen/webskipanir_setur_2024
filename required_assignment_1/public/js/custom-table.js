@@ -1,4 +1,4 @@
-export class CustomForm extends HTMLElement {
+export class CustomTable extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -9,7 +9,7 @@ export class CustomForm extends HTMLElement {
         return ['headers', 'data', 'caption'];
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name) {
         if (name === 'data') {
             this.updateTableData();
         }
@@ -55,10 +55,10 @@ export class CustomForm extends HTMLElement {
         const table = document.createElement('table');
         this.table = table;
 
-        const captionText = this.getAttribute('caption');
-        if (captionText) {
+        const caption_text = this.getAttribute('caption');
+        if (caption_text) {
             const caption = document.createElement('caption');
-            caption.textContent = captionText;
+            caption.textContent = caption_text;
             table.appendChild(caption);
         }
 
@@ -93,5 +93,22 @@ export class CustomForm extends HTMLElement {
             })
             this.tbody.appendChild(tr);
         });
+    }
+
+    fetchData() {
+        const stored_data = localStorage.getItem(this.id);
+        return stored_data ? JSON.parse(stored_data) : [];
+    }    
+
+    storeData(newData) {
+        const currentlyStoredData = this.fetchData();
+        currentlyStoredData.push(newData);
+        localStorage.setItem(this.id, JSON.stringify(currentlyStoredData));
+    }    
+
+    deleteRow(index) {
+        const currentlyStored = this.fetchData();
+        currentlyStored.splice(index, 1);
+        this.storeData(currentlyStored);
     }
 }
