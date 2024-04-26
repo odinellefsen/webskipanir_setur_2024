@@ -5,7 +5,9 @@
 }
 
 header, h1, a {
+    /* these will inherit their color from their parent element*/
     color: inherit;
+    /* removing for example underline from a tag links */
     text-decoration: none;
 }
 
@@ -43,6 +45,7 @@ h1 {
     width: 40%;
 }
 
+/*this will change style */
 @media (max-width: 1000px) {
     .form-and-table {
         display: flex;
@@ -74,10 +77,11 @@ input[type="submit"] {
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #747574;
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.5s ease;
 }
 
 input[type="submit"]:hover {

@@ -1,10 +1,16 @@
+// waiting for everything to load
 window.onload = function() {
+    // getting url
     const url_params = new URLSearchParams(window.location.search);
+    // decoding spaces and special characters after user=
     const user = decodeURIComponent(url_params.get('user'));
+    // loading the profile of the user
     loadUserProfile(user);
 };
 
+// adding a listener for fileUploader
 document.getElementById('fileUploader').addEventListener('change', event => {
+    // file at index 0
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -27,8 +33,10 @@ document.getElementById('fileUploader').addEventListener('change', event => {
 });
 
 function loadUserProfile(user) {
+    // fetching user data
     let user_data = localStorage.getItem(user);
 
+    // if no user data is found then I create a basic layout
     if (!user_data) {
         user_data = JSON.stringify({
             name: user,
@@ -37,13 +45,16 @@ function loadUserProfile(user) {
         localStorage.setItem(user, user_data);
     }
 
+    // calling function to display user data
     displayUserData(JSON.parse(user_data));
 }
 
 function displayUserData(user_data) {
+    // displaying name of person
     const profile_div = document.getElementById('profileInfo');
     profile_div.innerHTML = `<strong>${user_data.name}</strong>`;
 
+    // populating profileImage with the actual image
     const profile_image = document.getElementById('profileImage');
     if (user_data.photo) {
         profile_image.src = user_data.photo;

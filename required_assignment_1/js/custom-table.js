@@ -1,27 +1,38 @@
+// creating a web component by extending HTMLEement
 export class CustomTable extends HTMLElement {
     constructor() {
         super();
+        // creating a shadow dom
         this.attachShadow({ mode: 'open' });
+        
         this.initializeTable();
     }
 
+    // creates attributes of CustomTable
     static get observedAttributes() {
         return ['headers', 'data', 'caption'];
     }
 
+    // this gets called when an attribute changes
     attributeChangedCallback(name) {
+        // if data in data attribute changes then the table is updated
         if (name === 'data') {
             this.updateTableData();
         }
     }
 
+    // when CustomTable is placed as an html element in the DOM this is activated
     connectedCallback() {
+        // updating the table
         this.updateTableData();
     }
 
+    // initializing basic table structure when instance of CustomTable is created
     initializeTable() {
+        // clearing innerHTML in case anything is there
         this.shadowRoot.innerHTML = '';
 
+        // providing basic styling for table and table child elements
         const style = document.createElement('style');
         style.textContent = `
             table {
@@ -29,7 +40,7 @@ export class CustomTable extends HTMLElement {
                 border-collapse: collapse;
                 margin: 20px auto;
                 box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            }
+            }   
             th, td {
                 padding: 10px;
                 border: 1px solid #ccc;
@@ -50,8 +61,10 @@ export class CustomTable extends HTMLElement {
                 background-color: #cccccc;
             }
         `;
+        // appending styling to shadow dom
         this.shadowRoot.appendChild(style);
 
+        // creating table tag and also it's child tags
         const table = document.createElement('table');
         this.table = table;
 
@@ -62,9 +75,11 @@ export class CustomTable extends HTMLElement {
             table.appendChild(caption);
         }
 
+        // fetching values of CustomTable headers attribute
         const headers = JSON.parse(this.getAttribute('headers') || '[]');
         const thead = document.createElement('thead');
         const trHead = document.createElement('tr');
+        // setting table heads, <th>, to be the values of headers variable
         headers.forEach(header => {
             const th = document.createElement('th');
             th.textContent = header;
@@ -77,6 +92,7 @@ export class CustomTable extends HTMLElement {
         this.tbody = tbody;
         table.appendChild(tbody);
 
+        // appending an instances' table to the shadow dom
         this.shadowRoot.appendChild(table);
     }
 
@@ -104,6 +120,7 @@ export class CustomTable extends HTMLElement {
             return new_data_array;
         }
 
+        // basically by default the array has an empty array so I do a small check for that
         if (data.length > 0 && data[0].length != 0) {
             const ordered_data = reorderedData(data, headers);
 
@@ -126,11 +143,13 @@ export class CustomTable extends HTMLElement {
         }
     }
 
+    // I fetch data from localStorage
     fetchData() {
         const stored_data = localStorage.getItem(this.id);
         return stored_data ? JSON.parse(stored_data) : [];
     }    
 
+    // I store data in localStorage
     storeData(newData) {
         const currently_stored_data = this.fetchData();
         currently_stored_data.push(newData);
@@ -139,11 +158,5 @@ export class CustomTable extends HTMLElement {
             localStorage.setItem(this.id, new_data_string);
             this.setAttribute('data', new_data_string);
         }
-    }    
-
-    deleteRow(index) {
-        const data = this.fetchData();
-        data.splice(index, 1);
-        this.storeData(data);
     }
 }
