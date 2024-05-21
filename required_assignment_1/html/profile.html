@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="fo">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persons Profile</title>
-    <link rel="stylesheet" type="text/css" href="../css/index.css" />
-    <link rel="stylesheet" type="text/css" href="../css/profile.css" />
-</head>
-<body>
-    <header>
-        <h1>
-            <!-- making it into a link so that you go back to the inex.html page when clicked -->
-            <a href="./index.html">
-                Persons Profile
-            </a>
-        </h1>
-    </header>
-    <!-- main content of the page -->
-    <div class="main-content">
-        <!-- in case of no javascript -->
-        <noscript>
-            <div id="profileInfo">Enable javascript to see name of person</div>
-        </noscript>
-        <!-- div tag that will be populated by profile.js file -->
-        <div id="profileInfo"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Persons Profile</title>
+        <link rel="stylesheet" type="text/css" href="../css/index.css" />
+        <link rel="stylesheet" type="text/css" href="../css/profile.css" />
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="./index.html"> Persons Profile </a>
+            </h1>
+        </header>
+        <!-- main content of the page -->
+        <div class="main-content">
+            <noscript>
+                <div id="profileInfo">
+                    Enable javascript to see name of person
+                </div>
+            </noscript>
+            <!-- div tag that will be populated by profile.js file -->
+            <div id="profileInfo"></div>
 
-        <!-- parent element of image area. including imgage itself and input field for fetching image -->
-        <div class="profile-image">
-            <div class="profile-image-container">
-                <img id="profileImage" src="" alt="Profile Image" hidden>
+            <!-- parent element of image area. including imgage itself and input field for fetching image -->
+            <div class="profile-image">
+                <div class="profile-image-container">
+                    <img id="profileImage" src="" alt="Profile Image" hidden />
+                </div>
+                <h3 style="margin-top: 1em">Upload image of person</h3>
+                <input
+                    type="file"
+                    id="fileUploader"
+                    accept=".webp"
+                    class="fileUploader"
+                />
             </div>
-            <h3 style="margin-top: 1em;">Upload image of person</h3>
-            <input type="file" id="fileUploader" accept=".webp" class="fileUploader">
         </div>
-    </div>
-    <!-- js file -->
-    <script type="module" src="../js/profile.js"></script>
-</body>
+        <!-- js file -->
+        <script type="module" src="../js/profile.js"></script>
+    </body>
 </html>

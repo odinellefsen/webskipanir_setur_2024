@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header, h1, a {
+    /* these will inherit their color from their parent element*/
+    color: inherit;
+    /* removing for example underline from a tag links */
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid rgba(0, 0, 0, .5);
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: normal;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    height: 100%;
+}
+
+.form-and-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+/*this will change style */
+@media (max-width: 1000px) {
+    .form-and-table {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }    
+}
+
+/*Form*/
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 100%;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+input[type="email"],
+input[type="submit"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #747574;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+form label {
+    font-size: 16px;
+    margin-top: 10px;
+    padding-left: 10px;
+    align-self: flex-start;
+}
+
+/*Table*/
+.scrollable {
+    overflow-x: auto;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 16px;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+caption {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bolder;
+    padding: 10px;
+    background-color: #cccccc;
+    border-top: 1px solid rgba(0, 0, 0, .2); 
+    border-left: 1px solid rgba(0, 0, 0, .2); 
+    border-right: 1px solid rgba(0, 0, 0, .2);
+}

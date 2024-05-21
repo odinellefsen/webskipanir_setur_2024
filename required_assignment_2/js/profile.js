@@ -7,6 +7,7 @@ window.onload = function () {
 };
 
 document.getElementById("fileUploader").addEventListener("change", (event) => {
+    // file at index 0
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
