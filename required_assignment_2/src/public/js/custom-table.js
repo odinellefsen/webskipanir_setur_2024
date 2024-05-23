@@ -29,6 +29,12 @@ export class CustomTable extends HTMLElement {
     initializeTable() {
         this.shadowRoot.innerHTML = "";
 
+        const styleLink = document.createElement("link");
+        styleLink.rel = "stylesheet";
+        styleLink.href =
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
+        this.shadowRoot.appendChild(styleLink);
+
         const style = document.createElement("style");
         style.textContent = `
             table {
@@ -80,6 +86,9 @@ export class CustomTable extends HTMLElement {
             th.textContent = header;
             trHead.appendChild(th);
         });
+        const delete_row_th = document.createElement("th");
+        delete_row_th.textContent = "Delete a Row";
+        trHead.appendChild(delete_row_th);
         thead.appendChild(trHead);
         table.appendChild(thead);
 
@@ -122,7 +131,7 @@ export class CustomTable extends HTMLElement {
         if (data.length > 0 && data[0].length != 0) {
             const ordered_data = reorderedData(data, headers);
 
-            ordered_data.forEach((row) => {
+            ordered_data.forEach((row, rowIndex) => {
                 const tr = document.createElement("tr");
                 row.forEach((object) => {
                     const td = document.createElement("td");
@@ -136,8 +145,32 @@ export class CustomTable extends HTMLElement {
                     }
                     tr.appendChild(td);
                 });
+                const delete_row = document.createElement("td");
+                delete_row.style =
+                    "text-align: center; vertical-align: middle;";
+
+                const delete_row_icon = document.createElement("i");
+                delete_row_icon.className = "fa-solid fa-x";
+                delete_row_icon.style =
+                    "cursor: pointer; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #dc2626;";
+                delete_row_icon.addEventListener("click", () =>
+                    this.deleteRow(rowIndex)
+                );
+
+                delete_row.appendChild(delete_row_icon);
+
+                tr.appendChild(delete_row);
                 this.tbody.appendChild(tr);
             });
+        }
+    }
+
+    deleteRow(rowIndex) {
+        const data = JSON.parse(this.getAttribute("data") || "[[]]");
+        if (data.length > 0) {
+            data.splice(rowIndex, 1);
+            this.setAttribute("data", JSON.stringify(data));
+            localStorage.setItem(this.id, JSON.stringify(data));
         }
     }
 

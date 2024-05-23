@@ -20,10 +20,13 @@ app.use(
                 "script-src": ["'self'"],
                 "style-src": [
                     "'self'",
-                    "https://use.fontawesome.com",
+                    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
                     "'unsafe-inline'",
                 ],
-                "font-src": ["'self'", "https://use.fontawesome.com"],
+                "font-src": [
+                    "'self'",
+                    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
+                ],
             },
         },
     })
@@ -37,7 +40,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/index.html"));
 });
 
-// Redirect user profile to /profile/
+// Redirect person profile to /profile/
 app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/profile.html"));
 });
