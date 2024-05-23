@@ -9,7 +9,7 @@ router.post("/data", async (req, res) => {
     const { fullName, sex, dob, email } = req.body;
     try {
         const result = await pool.query(
-            "INSERT INTO users (username, sex, date_of_birth, email) VALUES ($1, $2, $3, $4) RETURNING *",
+            "INSERT INTO people_table (name, sex, date_of_birth, email) VALUES ($1, $2, $3, $4) RETURNING *",
             [fullName, sex, dob, email]
         );
         res.status(201).json(result.rows[0]);
@@ -22,7 +22,7 @@ router.post("/data", async (req, res) => {
 // Endpoint to handle GET requests
 router.get("/data", async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM users");
+        const result = await pool.query("SELECT * FROM people_table");
         res.json(result.rows);
     } catch (err) {
         console.error(err);

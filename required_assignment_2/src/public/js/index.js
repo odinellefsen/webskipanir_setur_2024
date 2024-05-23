@@ -1,7 +1,3 @@
-import { CustomTable } from "./custom-table.js";
-
-window.customElements.define("custom-table", CustomTable);
-
 document.addEventListener("DOMContentLoaded", () => {
     const custom_table = document.querySelector("#people-table-data");
 
@@ -14,14 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        const user_data = [
+        const person_data = [
             {
                 id: "Name",
                 value: document.getElementById("name").value,
                 // creating dynamic url for profile.html to create unique page for every person
-                url: `profile.html?user=${
-                    document.getElementById("name").value
-                }`,
+                url: `profile?person=${document.getElementById("name").value}`,
             },
             {
                 id: "Date of Birth",
@@ -39,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
         ];
 
-        custom_table.storeData(user_data);
+        custom_table.storeData(person_data);
 
         form.reset();
     });

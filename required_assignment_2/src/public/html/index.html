@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fo">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>People Info</title>
+        <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    </head>
+    <body>
+        <header>
+            <h1>Tool to remember things about people</h1>
+        </header>
+        <div class="main-content">
+            <!-- the area with the form and the table -->
+            <div class="form-and-table">
+                <h2>Form</h2>
+                <form
+                    action="javascript:void(0);"
+                    method="post"
+                    id="personForm"
+                >
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required />
+
+                    <label for="date">Date of Birth</label>
+                    <input type="date" id="date" name="date" required />
+
+                    <label for="sex">Sex</label>
+                    <select id="sex">
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+
+                    <input type="submit" value="Submit" />
+                </form>
+                <h2 style="margin-top: 20px">People Table</h2>
+                <div class="scrollable">
+                    <!-- in case of javascript being disabled an outline of the table will be shown -->
+                    <noscript>
+                        <table>
+                            <caption>
+                                Enable javascript
+                            </caption>
+                            <tr>
+                                <th>Enable javascript</th>
+                                <th>Enable javascript</th>
+                                <th>Enable javascript</th>
+                            </tr>
+                        </table>
+                    </noscript>
+                    <!-- using custom html element tag I created and this also counts as an instance of CustomTable class -->
+                    <custom-table
+                        caption="People"
+                        headers='["Name", "Sex", "Date of Birth", "Email"]'
+                        id="people-table-data"
+                    ></custom-table>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="/js/custom-table.js"></script>
+        <script type="module" src="/js/index.js"></script>
+    </body>
+</html>

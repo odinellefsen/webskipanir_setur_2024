@@ -156,3 +156,5 @@ export class CustomTable extends HTMLElement {
         }
     }
 }
+
+window.customElements.define("custom-table", CustomTable);

@@ -18,21 +18,28 @@ app.use(
             directives: {
                 "default-src": ["'self'"],
                 "script-src": ["'self'"],
-                "style-src": ["'self'", "https://use.fontawesome.com"],
+                "style-src": [
+                    "'self'",
+                    "https://use.fontawesome.com",
+                    "'unsafe-inline'",
+                ],
                 "font-src": ["'self'", "https://use.fontawesome.com"],
             },
         },
     })
 );
 
-// Serve static files
-app.use("/css", express.static(path.join(__dirname, "../css")));
-app.use("/js", express.static(path.join(__dirname, "../js")));
-app.use("/html", express.static(path.join(__dirname, "../html")));
+// Serving static files from "src/public"
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Redirect root to index.html
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../html/index.html"));
+    res.sendFile(path.join(__dirname, "../public/html/index.html"));
+});
+
+// Redirect user profile to /profile/
+app.get("/profile", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/profile.html"));
 });
 
 // Use routes defined in routes.js
