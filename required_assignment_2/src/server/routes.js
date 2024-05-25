@@ -22,7 +22,9 @@ router.post("/", async (req, res) => {
 // Endpoint to handle GET requests
 router.get("/", async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM people_table");
+        const result = await pool.query(
+            "SELECT id, name, sex, TO_CHAR(date_of_birth, 'DD-MM-YYYY') AS date_of_birth, email FROM people_table"
+        );
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -34,6 +36,11 @@ router.get("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
+        // Validate ID
+        if (isNaN(id)) {
+            return res.status(400).send("Invalid ID");
+        }
+
         const result = await pool.query(
             "DELETE FROM people_table WHERE id = $1 RETURNING *",
             [id]

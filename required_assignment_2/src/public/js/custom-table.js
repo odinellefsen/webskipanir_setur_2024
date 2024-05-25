@@ -1,4 +1,4 @@
-// creating a web component by extending HTMLEement
+// creating a web component by extending HTMLElement
 export class CustomTable extends HTMLElement {
     constructor() {
         super();
@@ -168,24 +168,7 @@ export class CustomTable extends HTMLElement {
     deleteRow(rowIndex) {
         const data = JSON.parse(this.getAttribute("data") || "[[]]");
         if (data.length > 0) {
-            data.splice(rowIndex, 1);
-            this.setAttribute("data", JSON.stringify(data));
-            localStorage.setItem(this.id, JSON.stringify(data));
-        }
-    }
-
-    fetchData() {
-        const stored_data = localStorage.getItem(this.id);
-        return stored_data ? JSON.parse(stored_data) : [];
-    }
-
-    storeData(newData) {
-        const currently_stored_data = this.fetchData();
-        currently_stored_data.push(newData);
-        const new_data_string = JSON.stringify(currently_stored_data);
-        if (this.getAttribute("data") !== new_data_string) {
-            localStorage.setItem(this.id, new_data_string);
-            this.setAttribute("data", new_data_string);
+            this.parentNode.deleteRow(rowIndex);
         }
     }
 }

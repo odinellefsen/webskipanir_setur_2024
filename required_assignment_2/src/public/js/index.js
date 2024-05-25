@@ -1,9 +1,32 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const custom_table = document.querySelector("#people-table-data");
 
-    const stored_data = custom_table.fetchData();
+    // Fetch data from the database
+    async function fetchTableData() {
+        try {
+            const response = await fetch("/api");
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            const formattedData = data.map((person) => [
+                { id: "ID", value: person.id },
+                {
+                    id: "Name",
+                    value: person.name,
+                    url: `profile?person=${person.name}`,
+                },
+                { id: "Sex", value: person.sex },
+                { id: "Date of Birth", value: person.date_of_birth }, // Use the date string directly
+                { id: "Email", value: person.email },
+            ]);
+            custom_table.setAttribute("data", JSON.stringify(formattedData));
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
-    custom_table.setAttribute("data", JSON.stringify(stored_data));
+    await fetchTableData();
 
     const form = document.getElementById("personForm");
 
@@ -11,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
 
         const name = document.getElementById("name").value;
-        const dob = document.getElementById("date").value;
+        const dob = document.getElementById("date").value; // Keep the date as a string
         const sex =
             document.getElementById("sex").options[
                 document.getElementById("sex").selectedIndex
@@ -28,13 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (!response.ok) {
-                throw new Error("Network response was bad");
+                throw new Error("Network response was not ok");
             }
 
             const result = await response.json();
-            console.log(
-                "Data Submitted Successfully: " + JSON.stringify(result)
-            );
+            console.log("Data Submitted Successfully:", result);
+
+            await fetchTableData(); // Refresh table data
         } catch (error) {
             console.error(
                 "There was a problem with the fetch operation:",
@@ -42,29 +65,32 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        const person_data = [
-            {
-                id: "Name",
-                value: name,
-                // creating dynamic url for profile.html to create unique page for every person
-                url: `profile?person=${document.getElementById("name").value}`,
-            },
-            {
-                id: "Date of Birth",
-                value: dob,
-            },
-            {
-                id: "Sex",
-                value: sex,
-            },
-            {
-                id: "Email",
-                value: email,
-            },
-        ];
-
-        custom_table.storeData(person_data);
-
         form.reset();
     });
+
+    // Function to delete row and update table
+    custom_table.deleteRow = async function (rowIndex) {
+        const data = JSON.parse(this.getAttribute("data") || "[]");
+        const row = data[rowIndex];
+        if (!row) return;
+
+        const id = row.find((obj) => obj.id === "ID").value;
+
+        try {
+            const response = await fetch(`/api/${id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            await fetchTableData(); // Refresh table data
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        }
+    };
 });
