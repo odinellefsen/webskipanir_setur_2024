@@ -7,8 +7,8 @@ const routes = require("./routes");
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
+// Middleware to parse JSON bodies with increased limit
+app.use(bodyParser.json({ limit: "10mb" })); // Increase the limit as needed
 
 // Use helmet to set appropriate security headers, including CSP
 app.use(
@@ -47,7 +47,7 @@ app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/profile.html"));
 });
 
-// endpoint for post and get requests
+// Endpoint for post and get requests
 app.use("/api", routes);
 
 app.listen(port, () => {

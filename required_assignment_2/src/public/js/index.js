@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 {
                     id: "Name",
                     value: person.name,
-                    url: `profile?person=${person.name}`,
+                    url: `profile?person=${person.id}`,
                 },
                 { id: "Sex", value: person.sex },
                 { id: "Date of Birth", value: person.date_of_birth }, // Use the date string directly
