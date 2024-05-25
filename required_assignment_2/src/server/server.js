@@ -7,10 +7,10 @@ const routes = require("./routes");
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON bodies with increased limit
-app.use(bodyParser.json({ limit: "10mb" })); // Increase the limit as needed
+// middleware and increasing limit
+app.use(bodyParser.json({ limit: "10mb" }));
 
-// Use helmet to set appropriate security headers, including CSP
+// helmet to set appropriate security headers, including CSP
 app.use(
     helmet({
         contentSecurityPolicy: {
