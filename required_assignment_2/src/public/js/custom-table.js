@@ -1,4 +1,4 @@
-// creating a web component by extending HTMLEement
+// creating a web component by extending HTMLElement
 export class CustomTable extends HTMLElement {
     constructor() {
         super();
@@ -165,12 +165,30 @@ export class CustomTable extends HTMLElement {
         }
     }
 
-    deleteRow(rowIndex) {
-        const data = JSON.parse(this.getAttribute("data") || "[[]]");
-        if (data.length > 0) {
-            const id = data[rowIndex].find((obj) => obj.id === "ID").value;
-            // Call the parent function to handle the deletion
-            document.querySelector("#people-table-data").deleteRow(rowIndex);
+    async deleteRow(rowIndex) {
+        const data = JSON.parse(this.getAttribute("data") || "[]");
+        const row = data[rowIndex];
+        if (!row) return;
+
+        const id = row.find((obj) => obj.id === "ID").value;
+
+        try {
+            const response = await fetch(`/api/${id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            await this.closest("html")
+                .querySelector("#people-table-data")
+                .fetchTableData(); // Refresh table data
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
         }
     }
 }

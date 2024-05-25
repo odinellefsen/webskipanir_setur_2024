@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         event.preventDefault();
 
         const name = document.getElementById("name").value;
-        const dob = document.getElementById("date").value; // Keep the date as a string
+        const dob = document.getElementById("date").value;
         const sex =
             document.getElementById("sex").options[
                 document.getElementById("sex").selectedIndex
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const result = await response.json();
             console.log("Data Submitted Successfully:", result);
 
-            await fetchTableData(); // Refresh table data
+            await fetchTableData();
         } catch (error) {
             console.error(
                 "There was a problem with the fetch operation:",
@@ -68,29 +68,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         form.reset();
     });
 
-    // Function to delete row and update table
-    custom_table.deleteRow = async function (rowIndex) {
-        const data = JSON.parse(this.getAttribute("data") || "[]");
-        const row = data[rowIndex];
-        if (!row) return;
-
-        const id = row.find((obj) => obj.id === "ID").value;
-
-        try {
-            const response = await fetch(`/api/${id}`, {
-                method: "DELETE",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            await fetchTableData(); // Refresh table data
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        }
-    };
+    custom_table.fetchTableData = fetchTableData;
 });
