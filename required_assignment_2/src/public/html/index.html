@@ -14,11 +14,7 @@
             <!-- the area with the form and the table -->
             <div class="form-and-table">
                 <h2>Form</h2>
-                <form
-                    action="javascript:void(0);"
-                    method="post"
-                    id="personForm"
-                >
+                <form id="personForm">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required />
 
@@ -26,7 +22,7 @@
                     <input type="date" id="date" name="date" required />
 
                     <label for="sex">Sex</label>
-                    <select id="sex">
+                    <select id="sex" name="sex">
                         <option value="0">Male</option>
                         <option value="1">Female</option>
                     </select>

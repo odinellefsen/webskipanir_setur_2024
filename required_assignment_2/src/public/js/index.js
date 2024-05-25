@@ -7,29 +7,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("personForm");
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const dob = document.getElementById("date").value;
+        const sex =
+            document.getElementById("sex").options[
+                document.getElementById("sex").selectedIndex
+            ].text;
+        const email = document.getElementById("email").value;
+
+        try {
+            const response = await fetch("/api", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, dob, sex, email }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was bad");
+            }
+
+            const result = await response.json();
+            console.log(
+                "Data Submitted Successfully: " + JSON.stringify(result)
+            );
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        }
 
         const person_data = [
             {
                 id: "Name",
-                value: document.getElementById("name").value,
+                value: name,
                 // creating dynamic url for profile.html to create unique page for every person
                 url: `profile?person=${document.getElementById("name").value}`,
             },
             {
                 id: "Date of Birth",
-                value: document.getElementById("date").value,
+                value: dob,
             },
             {
                 id: "Sex",
-                value: document.getElementById("sex").options[
-                    document.getElementById("sex").selectedIndex
-                ].text,
+                value: sex,
             },
             {
                 id: "Email",
-                value: document.getElementById("email").value,
+                value: email,
             },
         ];
 

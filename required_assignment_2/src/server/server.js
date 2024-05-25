@@ -21,11 +21,13 @@ app.use(
                 "style-src": [
                     "'self'",
                     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
+                    "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
                     "'unsafe-inline'",
                 ],
                 "font-src": [
                     "'self'",
                     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
+                    "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
                 ],
             },
         },
@@ -45,7 +47,7 @@ app.get("/profile", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/profile.html"));
 });
 
-// Use routes defined in routes.js
+// endpoint for post and get requests
 app.use("/api", routes);
 
 app.listen(port, () => {

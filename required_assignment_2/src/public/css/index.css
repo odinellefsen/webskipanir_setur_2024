@@ -5,7 +5,6 @@
 }
 
 header, h1, a {
-    /* these will inherit their color from their parent element*/
     color: inherit;
     /* removing for example underline from a tag links */
     text-decoration: none;
