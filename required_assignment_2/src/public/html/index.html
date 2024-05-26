@@ -22,13 +22,10 @@
                     <input type="date" id="date" name="date" required />
 
                     <label for="sex">Sex</label>
-                    <select id="sex" name="sex">
+                    <select id="sex" name="sex" required>
                         <option value="0">Male</option>
                         <option value="1">Female</option>
                     </select>
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required />
 
                     <input type="submit" value="Submit" />
                 </form>
@@ -50,7 +47,7 @@
                     <!-- using custom html element tag I created and this also counts as an instance of CustomTable class -->
                     <custom-table
                         caption="People"
-                        headers='["Name", "Sex", "Date of Birth", "Email"]'
+                        headers='["Name", "Sex", "Date of Birth"]'
                         id="people-table-data"
                     ></custom-table>
                 </div>

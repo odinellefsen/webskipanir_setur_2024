@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 },
                 { id: "Sex", value: person.sex },
                 { id: "Date of Birth", value: person.date_of_birth }, // Use the date string directly
-                { id: "Email", value: person.email },
+                // { id: "Email", value: person.email },
             ]);
             custom_table.setAttribute("data", JSON.stringify(formattedData));
         } catch (error) {
@@ -39,15 +39,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("sex").options[
                 document.getElementById("sex").selectedIndex
             ].text;
-        const email = document.getElementById("email").value;
 
         try {
-            const response = await fetch("/api", {
+            const response = await fetch("/api/basic-info", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, dob, sex, email }),
+                body: JSON.stringify({ name, dob, sex }),
             });
 
             if (!response.ok) {
@@ -67,6 +66,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         form.reset();
     });
+
+    custom_table.deleteRow = async (rowIndex) => {
+        const data = JSON.parse(custom_table.getAttribute("data") || "[]");
+        const row = data[rowIndex];
+        if (!row) return;
+
+        const id = row.find((obj) => obj.id === "ID").value;
+
+        try {
+            const response = await fetch(`/api/${id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            await fetchTableData(); // refresh table data
+        } catch (error) {
+            console.error(
+                "There was a problem with the fetch operation:",
+                error
+            );
+        }
+    };
 
     custom_table.fetchTableData = fetchTableData;
 });

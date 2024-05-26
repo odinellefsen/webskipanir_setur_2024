@@ -35,7 +35,45 @@
                     class="fileUploader"
                 />
             </div>
+
+            <div>
+                <div
+                    style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-top: 2rem;
+                    "
+                >
+                    <h2>More Info</h2>
+                    <p>Add additional information about the person</p>
+                </div>
+
+                <div
+                    style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        margin-top: 2rem;
+                    "
+                >
+                    <h3>Persons Emails</h3>
+                </div>
+
+                <form id="emailForm">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+
+                    <input type="submit" value="Submit" />
+                </form>
+                <custom-table
+                    caption="emails"
+                    headers='["emails"]'
+                    id="personEmails"
+                />
+            </div>
         </div>
         <script type="module" src="/js/profile.js"></script>
+        <script type="module" src="/js/custom-table.js"></script>
     </body>
 </html>

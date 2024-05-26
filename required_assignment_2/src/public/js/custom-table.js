@@ -1,4 +1,4 @@
-// creating a web component by extending HTMLElement
+// custom-table.js
 export class CustomTable extends HTMLElement {
     constructor() {
         super();
@@ -87,7 +87,8 @@ export class CustomTable extends HTMLElement {
             trHead.appendChild(th);
         });
         const delete_row_th = document.createElement("th");
-        delete_row_th.textContent = "Delete a Row";
+        delete_row_th.style = "text-align: center";
+        delete_row_th.textContent = "clear";
         trHead.appendChild(delete_row_th);
         thead.appendChild(trHead);
         table.appendChild(thead);
@@ -101,13 +102,11 @@ export class CustomTable extends HTMLElement {
     }
 
     updateTableData() {
-        const data = JSON.parse(this.getAttribute("data") || "[[]]");
+        const data = JSON.parse(this.getAttribute("data") || "[]");
         const headers = JSON.parse(this.getAttribute("headers") || "[]");
         this.tbody.innerHTML = "";
 
-        // rendering based on order and values of the headers attribute values
-        // basically the order of values in data is rearranged to be exact same order as headers
-        // and all values in data that are not in headers will be removed
+        // Function to reorder data based on headers
         function reorderedData(data, headers) {
             let new_data_array = [];
             data.forEach((arr) => {
@@ -123,12 +122,11 @@ export class CustomTable extends HTMLElement {
                 });
                 new_data_array.push(reordered);
             });
-
             return new_data_array;
         }
 
-        // basically by default the array has an empty array so I do a small check for that
-        if (data.length > 0 && data[0].length != 0) {
+        // Check if data is non-empty and has correct structure
+        if (data.length > 0 && Array.isArray(data[0])) {
             const ordered_data = reorderedData(data, headers);
 
             ordered_data.forEach((row, rowIndex) => {
@@ -145,6 +143,8 @@ export class CustomTable extends HTMLElement {
                     }
                     tr.appendChild(td);
                 });
+
+                // Add delete icon cell
                 const delete_row = document.createElement("td");
                 delete_row.style =
                     "text-align: center; vertical-align: middle;";
@@ -158,38 +158,15 @@ export class CustomTable extends HTMLElement {
                 );
 
                 delete_row.appendChild(delete_row_icon);
-
                 tr.appendChild(delete_row);
                 this.tbody.appendChild(tr);
             });
         }
     }
 
-    async deleteRow(rowIndex) {
-        const data = JSON.parse(this.getAttribute("data") || "[]");
-        const row = data[rowIndex];
-        if (!row) return;
-
-        const id = row.find((obj) => obj.id === "ID").value;
-
-        try {
-            const response = await fetch(`/api/${id}`, {
-                method: "DELETE",
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
-            await this.closest("html")
-                .querySelector("#people-table-data")
-                .fetchTableData(); // Refresh table data
-        } catch (error) {
-            console.error(
-                "There was a problem with the fetch operation:",
-                error
-            );
-        }
+    deleteRow(rowIndex) {
+        // Implement your delete logic here
+        console.log("Deleting row:", rowIndex);
     }
 }
 
