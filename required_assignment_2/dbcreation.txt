@@ -1,0 +1,18 @@
+CREATE TYPE person_sex as ENUM ('Female', 'Male');
+CREATE TABLE people_table (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    sex person_sex NOT NULL,
+    date_of_birth DATE,
+    photo TEXT
+);
+
+CREATE TABLE email_table (
+    email_id SERIAL PRIMARY KEY,
+    person_id INTEGER NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_person
+        FOREIGN KEY (person_id)
+        REFERENCES people_table (id)
+        ON DELETE CASCADE
+);
